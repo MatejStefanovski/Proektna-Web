@@ -1,0 +1,258 @@
+<!--
+Za SuperUser
+Username: Matej
+Password: admin
+-->
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>PetCare Почетна</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}?v=1.1">
+    <style>
+        .page-layout {
+            display: flex !important;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 240px !important;
+            background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%) !important;
+            position: sticky !important;
+            top: 0 !important;
+            left: 0 !important;
+            height: fit-content !important;
+            z-index: 100 !important;
+        }
+        .main-content {
+            margin-left: 0 !important;
+            flex: 1 !important;
+            width: calc(100% - 240px) !important;
+        }
+        .main-nav-btn {
+            color: #fff !important;
+            background: rgba(0, 0, 0, 0.6) !important;
+            border: 2px solid rgba(255, 255, 255, 0.3) !important;
+            border-radius: 25px !important;
+            padding: 15px 30px !important;
+            text-decoration: none !important;
+        }
+    </style>
+</head>
+<body>
+<div class="home-hero-bg">
+    <div class="hero-btn-group">
+        {% if user.is_authenticated %}
+        <form action="/accounts/logout/" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn" style="background:none;">Одјави се</button>
+        </form>
+        {% else %}
+        <a href="/accounts/login/" class="fancy-btn">Најави се</a> <a href="/register/" class="fancy-btn">Регистрирај се</a>
+        {% endif %}
+    </div>
+    
+    <div class="hero-content">
+        <h1>Добредојдовте во PetCare!</h1>
+        <p>Најдобриот избор за вашето милениче.</p>
+    </div>
+
+    <div class="main-navigation">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-4 text-center">
+                    <a href="#about" class="main-nav-btn">За нас</a>
+                </div>
+                <div class="col-md-4 text-center">
+                    <a href="#products" class="main-nav-btn">Сите производи</a>
+                </div>
+                <div class="col-md-4 text-center">
+                    <a href="#contact" class="main-nav-btn">Контакт</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-layout">
+    <div class="sidebar">
+        <div class="sidebar-content">
+            <h4 class="sidebar-title">Категории</h4>
+            <ul class="sidebar-links">
+                <li><a href="{% url 'home' %}" class="active"><i class="fas fa-home"></i> Дома</a></li>
+                <li><a href="/veterinari/"><i class="fas fa-user-md"></i> Ветеринари</a></li>
+                <li><a href="/oprema/"><i class="fas fa-tools"></i> Опрема</a></li>
+                <li><a href="/hotel/"><i class="fas fa-hotel"></i> Хотел</a></li>
+                <li><a href="/igracki/"><i class="fas fa-dog"></i> Играчки</a></li>
+                <li><a href="/milenicinja/"><i class="fas fa-paw"></i> Миленичиња</a></li>
+                <li><a href="/hrana/"><i class="fas fa-bone"></i> Храна</a></li>
+                <li><a href="/nega/"><i class="fas fa-cut"></i> Нега</a></li>
+                <li><a href="/dresiranje/"><i class="fas fa-graduation-cap"></i> Дресирање</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div id="about" class="about-us-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="section-title">За нас</h2>
+                        <div class="about-content">
+                            <div class="row align-items-center">
+                                <div class="col-md-6">
+                                    <h3>Добредојдовте во PetCare</h3>
+                                    <p>Ние сме посветени на обезбедување најдобра грижа за вашите миленици. Нашата мисија е да понудиме квалитетни производи и услуги кои ќе обезбедат вашите миленици да живеат среќен и здрав живот.</p>
+                                    <p>Со години искуство во грижата за миленици, ги разбираме уникатните потреби на различните животни и сме посветени да ви помогнеме да ги направите најдобрите избори за вашите крзнени пријатели.</p>
+                                    <div class="about-features">
+                                        <div class="feature-item">
+                                            <i class="fas fa-heart"></i>
+                                            <span>Квалитетна грижа</span>
+                                        </div>
+                                        <div class="feature-item">
+                                            <i class="fas fa-shield-alt"></i>
+                                            <span>Доверливи производи</span>
+                                        </div>
+                                        <div class="feature-item">
+                                            <i class="fas fa-users"></i>
+                                            <span>Експертска поддршка</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="about-image">
+                                        <img src="../static/Sliki/home_page_slika1.jpg" alt="About PetCare" class="img-fluid rounded">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="products" class="container my-5">
+            <h2 class="mb-4 text-center">Производи</h2>
+            <div class="row justify-content-center">
+                {% for product in products %}
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="object-fit:cover;max-height:220px;">
+                        {% else %}
+                        <img src="https://via.placeholder.com/300x220?text=No+Image" class="card-img-top" alt="No image">
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.description }}</p>
+                            <div class="mt-auto">
+                                <span class="fw-bold text-success">${{ product.price }}</span>
+                            </div>
+                            <form action="{% url 'add_to_cart' product.id %}" method="post" class="mt-2">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                                <button type="submit" class="btn btn-primary btn-sm w-100">Додај во кошничка</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center text-muted">Нема достапни производи во оваа категорија.</div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="contact" class="contact-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="section-title">Контакт</h2>
+                        <div class="contact-content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="contact-info">
+                                        <h3>Контакт информации</h3>
+                                        <p>Имате прашања за нашите производи или услуги? Испратете ни порака и ќе ви одговориме најскоро што можеме.</p>
+                                        
+                                        <div class="contact-details">
+                                            <div class="contact-item">
+                                                <i class="fas fa-map-marker-alt"></i>
+                                                <div>
+                                                    <h5>Адреса</h5>
+                                                    <p>ул. „Ацо Караманов“, 33А Скопје</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="contact-item">
+                                                <i class="fas fa-phone"></i>
+                                                <div>
+                                                    <h5>Телефон</h5>
+                                                    <p>+389 77 878 952</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="contact-item">
+                                                <i class="fas fa-envelope"></i>
+                                                <div>
+                                                    <h5>Е-пошта</h5>
+                                                    <p>info@petcare.com</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="contact-item">
+                                                <i class="fas fa-clock"></i>
+                                                <div>
+                                                    <h5>Работни часови</h5>
+                                                    <p>Понеделник - Петок: 9:00 - 18:00<br>
+                                                    Сабота: 10:00 - 16:00</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="contact-form">
+                                        <h3>Испратете ни порака</h3>
+                                        <form>
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label">Име</label>
+                                                <input type="text" class="form-control" id="name" placeholder="Вашето име">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Е-пошта</label>
+                                                <input type="email" class="form-control" id="email" placeholder="Вашата е-пошта">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="subject" class="form-label">Предмет</label>
+                                                <input type="text" class="form-control" id="subject" placeholder="Предмет">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="message" class="form-label">Порака</label>
+                                                <textarea class="form-control" id="message" rows="5" placeholder="Вашата порака"></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Испрати порака</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if user.is_authenticated %}
+<div class="profile-top-left">
+    <a href="{% url 'home' %}" style="text-decoration: none; color: inherit;">
+        <i class="fa-solid fa-user"></i>&nbsp {{ user.username }}
+    </a>
+    <a href="/cart/"><i class="fa-solid fa-cart-shopping cart-icon"></i></a>
+</div>
+{% endif %}
+</body>
+</html>

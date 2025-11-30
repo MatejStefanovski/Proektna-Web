@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-credit-card"></i> Информации за наплата</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'process_checkout' %}">
+                        {% csrf_token %}
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label">Име</label>
+                                <input type="text" class="form-control" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label">Презиме</label>
+                                <input type="text" class="form-control" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Е-пошта</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Адреса за достава</label>
+                            <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="cardNumber" class="form-label">Број на картичка</label>
+                            <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="expiryDate" class="form-label">Важи до</label>
+                                <input type="text" class="form-control" id="expiryDate" name="expiryDate" placeholder="MM/YY" maxlength="5" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cvv" class="form-label">CVV</label>
+                                <input type="text" class="form-control" id="cvv" name="cvv" placeholder="123" maxlength="4" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="cardName" class="form-label">Име на картичка</label>
+                            <input type="text" class="form-control" id="cardName" name="cardName" required>
+                        </div>
+
+                        <div class="card bg-light mb-3">
+                            <div class="card-header">
+                                <h6 class="mb-0">Преглед на нарачка</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <span>Вкупно:</span>
+                                    <span>${{ total }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span>Достава:</span>
+                                    <span>$5.00</span>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between fw-bold">
+                                    <span>Вкупно за плаќање:</span>
+                                    <span>${{ total_with_shipping }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'cart' %}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Назад кон кошничка
+                            </a>
+                            <button type="submit" class="btn btn-success flex-grow-1">
+                                <i class="fas fa-lock"></i> Заврши нарачка
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4 text-center">Вашата кошничка</h2>
+
+    <div id="cart-items-section">
+        {% if cart_items %}
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Слика</th>
+                            <th>Име</th>
+                            <th>Цена</th>
+                            <th>Количина</th>
+                            <th>Вкупно</th>
+                            <th>Акција</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart_items %}
+                        <tr>
+                            <td style="width:100px;">
+                                {% if item.product.image %}
+                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" style="width:80px; height:60px; object-fit:cover;">
+                                {% else %}
+                                    <img src="https://via.placeholder.com/80x60?text=No+Image" alt="Нема слика">
+                                {% endif %}
+                            </td>
+                            <td>{{ item.product.name }}</td>
+                            <td>${{ item.product.price }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>${{ item.subtotal }}</td>
+                            <td style="width: 230px;">
+                                <div class="d-flex gap-2">
+                                    <form action="{% url 'remove_from_cart' item.product.id %}" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-warning btn-sm">
+                                            <i class="fa-solid fa-minus"></i> Отстрани 1
+                                        </button>
+                                    </form>
+                                    <form action="{% url 'remove_all_from_cart' item.product.id %}" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fa-solid fa-trash"></i> Отстрани сѐ
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="text-end mb-4">
+                    <h4>Вкупно: <span class="text-success">${{ total }}</span></h4>
+                </div>
+
+                <div class="text-center mb-4">
+                    <form action="{% url 'checkout' %}" method="get" style="display:inline;">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            <i class="fas fa-credit-card"></i> Продолжи кон наплата
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-info text-center">Вашата кошничка е празна.</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 

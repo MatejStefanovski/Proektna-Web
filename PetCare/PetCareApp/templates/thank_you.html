@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card shadow">
+                <div class="card-body py-5">
+                    <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                    <h2 class="mt-3 text-success">Ви благодариме за вашата нарачка!</h2>
+                    <p class="lead">Вашата нарачка е успешно процесирана.</p>
+                    <p class="text-muted">Ќе добиете потврда на е-пошта наскоро.</p>
+                    <div class="mt-4">
+                        <a href="{% url 'home' %}" class="btn btn-primary">
+                            <i class="fas fa-home"></i> Продолжи со купување
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
